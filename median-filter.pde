@@ -17,7 +17,7 @@ void draw() {
 
 void keyPressed() {
   if (key == 'r' || key == 'R') 
-    med_res = median(rev_res, int(random(5, 15)));
+    med_res = median(lena, int(random(5, 15)));
 }
 
 
