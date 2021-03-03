@@ -27,7 +27,6 @@ class Car {
   void reset() {
     x = initial_x;
   }
-  
 }
 
 class ElectricCar extends Car {
@@ -64,7 +63,6 @@ class ElectricCar extends Car {
     x = initial_x;
     isEven = true;
   }
-  
 }
 
 
