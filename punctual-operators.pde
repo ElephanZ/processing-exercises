@@ -3,11 +3,11 @@ PImage lena, out;
 void setup() {
   size(512, 256);
   
-  lena = loadImage("lenna.png");
+  lena = loadImage("lena.png");
   lena.resize(256, 256);
   lena.filter(GRAY);
   
-  out = gamma(lena, int(random(5, 15)));
+  out = lena.copy();
 }
 
 void draw() {
@@ -16,62 +16,54 @@ void draw() {
 }
 
 void keyPressed() {
-  if (key == 'r' || key == 'R') 
-    out = negativo(lena);
+  if (key == 'n' || key == 'N') 
+    out = operator(lena, "negative");
+  else if (key == 'g' || key == 'G')
+    out = operator(lena, "gamma");
+  else if (key == 'l' || key == 'L')
+    out = operator(lena, "log");
 }
 
 
-PImage negativo(PImage I) {
+PImage operator(PImage I, String type) {
   PImage res = I.copy();
   res.loadPixels();
-  
-  float r, g, b;
 
-  for (int i = 0; i < res.pixels.length; i++) {
-    r = 255 - red(res.pixels[i]);
-    g = 255 - green(res.pixels[i]);
-    b = 255 - blue(res.pixels[i]);
-    res.pixels[i] = color(r, g, b);
-  }
-  res.updatePixels();
-  
+  for (int i = 0; i < res.pixels.length; i++) 
+    res.pixels[i] = (type == "log" ? logarithm(res.pixels[i]) : (type == "negative" ? negative(res.pixels[i]) : gamma(res.pixels[i], random(2, 8))));
+
+  res.updatePixels();  
   return res;
 }
 
-PImage gamma(PImage I, float gamma) {
-  PImage res = createImage(I.width, I.height, RGB);
-  res.loadPixels();
+color negative(color c) {
+  float r, g, b;
   
+  r = 255 - red(c);
+  g = 255 - green(c);
+  b = 255 - blue(c);
+  
+  return color(r, g, b);
+}
+
+color gamma(color c, float gamma) {
   float r, g, b;
   float C = 1 / pow(255, gamma - 1);
   
-  I.loadPixels();
-  for (int i = 0; i < res.pixels.length; i++) {
-    r = C * pow(red(I.pixels[i]), gamma);
-    g = C * pow(green(I.pixels[i]), gamma);
-    b = C * pow(blue(I.pixels[i]), gamma);
-    res.pixels[i] = color(r, g, b);
-  }
-  res.updatePixels();
+  r = C * pow(red(c), gamma);
+  g = C * pow(green(c), gamma);
+  b = C * pow(blue(c), gamma);
   
-  return res;
+  return color(r, g, b);
 }
 
-PImage logarithm(PImage I) {
-  PImage res = createImage(I.width, I.height, RGB);
-  res.loadPixels();
-  
+color logarithm(color c) {
   float r, g, b;
   float C = 255 / log(256);
   
-  I.loadPixels();
-  for (int i = 0; i < res.pixels.length; i++) {
-    r = C * log(1 + red(I.pixels[i]));
-    g = C * log(1 + green(I.pixels[i]));
-    b = C * log(1 + blue(I.pixels[i]));
-    res.pixels[i] = color(r, g, b);
-  }
-  res.updatePixels();
+  r = C * log(1 + red(c));
+  g = C * log(1 + green(c));
+  b = C * log(1 + blue(c));
   
-  return res;
+  return color(r, g, b);
 }
