@@ -30,7 +30,9 @@ PImage operator(PImage I, String type) {
   res.loadPixels();
 
   for (int i = 0; i < res.pixels.length; i++) 
-    res.pixels[i] = (type == "log" ? logarithm(res.pixels[i]) : (type == "negative" ? negative(res.pixels[i]) : gamma(res.pixels[i], random(2, 8))));
+    res.pixels[i] = (type == "log" ? logarithm(res.pixels[i]) :
+                    (type == "negative" ? negative(res.pixels[i]) :
+                    gamma(res.pixels[i], random(2, 8))));
 
   res.updatePixels();  
   return res;
