@@ -1,9 +1,9 @@
-class Auto {
+class Car {
   float x, y, initial_x;
   float velX;
   float b, h;
   
-  Auto(float _x, float _y, float _sx) {
+  Car(float _x, float _y, float _sx) {
     b = 60;
     h = 30;
     x = initial_x = _x;
@@ -18,7 +18,7 @@ class Auto {
     rect(x, y, b, h);
   }
   
-  void muovi() {
+  void move() {
     x += velX;
     x %= width;
     disegna();
@@ -30,11 +30,11 @@ class Auto {
   
 }
 
-class AutoElettrica extends Auto{
+class ElectricCar extends Car {
   boolean isEven;
   float gray;
   
-  AutoElettrica(float _x, float _y, float _sx, float _g) {
+  ElectricCar(float _x, float _y, float _sx, float _g) {
     super(_x, _y, _sx);
     gray = _g;
     isEven = true;
@@ -51,7 +51,7 @@ class AutoElettrica extends Auto{
     }
   }
   
-  void muovi() {
+  void move() {
     x += velX;
     if (x > width) {
       x = 0;
@@ -68,23 +68,23 @@ class AutoElettrica extends Auto{
 }
 
 
-Auto bmw;
-AutoElettrica toyota;
+Car bmw;
+ElectricCar toyota;
 
 void setup() {
   size(512, 512);
   frameRate(30);
   
   float bmw_vel = random(2, 10); 
-  bmw = new Auto(random(0, width), 1*(height/3), bmw_vel);
-  toyota = new AutoElettrica(random(0, width), 2*(height/3), bmw_vel/2, random(0, 255));
+  bmw = new Car(random(0, width), 1*(height/3), bmw_vel);
+  toyota = new ElectricCar(random(0, width), 2*(height/3), bmw_vel/2, random(0, 255));
 }
 
 void draw() {
   background(255);
   
-  bmw.muovi();
-  toyota.muovi();  
+  bmw.move();
+  toyota.move();  
 }
 
 void keyPressed() {
