@@ -34,8 +34,7 @@ float[][] sharpening = {{-1, 0, -1},
                        {0, 5, 0},
                        {-1, 0, -1}};
 
-PImage convert(float[][] newMatrix)
-{
+PImage convert(float[][] newMatrix) {
   PImage res = createImage(newMatrix[0].length, newMatrix.length, RGB);
   float col = 0;
   
@@ -49,8 +48,7 @@ PImage convert(float[][] newMatrix)
   return res;
 }
 
-PImage convolution(PImage I, float[][] K)
-{
+PImage convolution(PImage I, float[][] K) {
   float[][] res = new float[I.height][I.width];
   int N = K[0].length, M = K.length;
   
