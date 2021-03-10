@@ -19,13 +19,13 @@ float MSE(PImage I1, PImage I2) {
   I1.loadPixels();
   I2.loadPixels();
   
-  for (int i = 0; i < I1.pixels.length; i++) res += pow(blue(I1.pixels[i]) - blue(I2.pixels[i]), 2);
+  for (int i = 0; i < I1.pixels.length; i++)
+    res += pow(blue(I1.pixels[i]) - blue(I2.pixels[i]), 2);
   res /= I1.pixels.length;
   
   return res;
 }
 
 float PSNR(PImage I1, PImage I2) {
-  float mse = MSE(I1, I2);
-  return 10 * log(255*255 / mse) / log(10);
+  return 10 * log(255*255 / MSE(I1, I2)) / log(10);
 }
